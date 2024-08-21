@@ -1,73 +1,50 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { addContact, deleteContact, fetchContacts } from "./contactsOps";
+import { createSlice } from "@reduxjs/toolkit";
+import { loginThunk, registerThunk } from "./operation";
 
-const contactSlice = createSlice({
-  name: "contacts",
-  initialState: {
-    items: [],
-    isLoading: false,
-    error: null,
-    filter: "",
+const initialState = {
+  user: {
+    name: "",
+    email: "",
   },
-  reducers: {
-    updateFilter: (state, action) => {
-      state.filter = action.payload;
-    },
-  },
+  token: null,
+  isLoggedIn: false,
+  isRefreshing: false,
+};
+
+const authSlice = createSlice({
+  name: "auth",
+  initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(fetchContacts.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+      .addCase(registerThunk.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
       })
-      .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.items = action.payload;
-      })
-      .addCase(fetchContacts.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message;
-      })
-      .addCase(addContact.fulfilled, (state, action) => {
-        state.items.push(action.payload);
-      })
-      .addCase(deleteContact.fulfilled, (state, action) => {
-        state.items = state.items.filter(
-          (contact) => contact.id !== action.payload
-        );
+      .addCase(loginThunk.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
       });
   },
 });
 
-const selectContacts = (state) => state.contacts.items;
-const selectFilter = (state) => state.contacts.filter;
-
-export const selectFilteredContacts = createSelector(
-  [selectContacts, selectFilter],
-  (contacts, filter) => {
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  }
-);
-
-export const { updateFilter } = contactSlice.actions;
-export default contactSlice.reducer;
-
-// import { createSlice } from "@reduxjs/toolkit"
+export const authReducer = authSlice.reducer;
+// export default authSlice.reducer;
 
 // const initialState = {
-//     user: {
-//         name: '',
-//         email: '',
-//     },
-//     token: "",
-//     isLoggedIn: false,
-// }
+//   user: {
+//     name: "",
+//     email: "",
+//   },
+//   token: null,
+//   isLoggedIn: false,
+//   isRefreshing: false,
+// };
 
 // const slice = createSlice({
-//     name: 'auth',
-//     initialState,
-// })
+//   name: "auth",
+//   initialState,
+// });
 
-// export const authReducer = slice.reducer
+// export const authReducer = slice.reducer;
