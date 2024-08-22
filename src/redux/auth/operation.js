@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { contactsApi } from "../../config/contactsApi";
+import { clearToken, contactsApi, setToken } from "../../config/contactsApi";
 
 export const registerThunk = createAsyncThunk(
   "register",
   async (credentials, thunkApi) => {
     try {
       const { data } = await contactsApi.post("users/signup", credentials);
+      setToken(data.token);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -18,6 +19,7 @@ export const loginThunk = createAsyncThunk(
   async (credentials, thunkApi) => {
     try {
       const { data } = await contactsApi.post("users/login", credentials);
+      setToken(data.token);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -25,48 +27,23 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
-// import { createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
+export const logoutThunk = createAsyncThunk("logout", async (_, thunkApi) => {
+  try {
+    await contactsApi.post("users/logout");
+    clearToken();
+  } catch (error) {
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
 
-// export const fetchContacts = createAsyncThunk(
-//   "contacts/fetchContacts",
-//   async (_, { rejectWithValue }) => {
+// export const getMeThunk = createAsyncThunk(
+//   "auth/getMe",
+//   async (_, thunkApi) => {
 //     try {
-//       const response = await axios.get(
-//         "https://66093b4c0f324a9a2882f3ea.mockapi.io/vlashark/contacts"
-//       );
-//       return response.data;
+//       const { data } = await contactsApi.get("users/current");
+//       return data;
 //     } catch (error) {
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
-
-// export const addContact = createAsyncThunk(
-//   "contacts/addContact",
-//   async (newContact, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(
-//         "https://66093b4c0f324a9a2882f3ea.mockapi.io/vlashark/contacts",
-//         newContact
-//       );
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
-
-// export const deleteContact = createAsyncThunk(
-//   "contacts/deleteContact",
-//   async (contactId, { rejectWithValue }) => {
-//     try {
-//       await axios.delete(
-//         `https://66093b4c0f324a9a2882f3ea.mockapi.io/vlashark/contacts/${contactId}`
-//       );
-//       return contactId;
-//     } catch (error) {
-//       return rejectWithValue(error.response.data);
+//       return thunkApi.rejectWithValue(error.message);
 //     }
 //   }
 // );

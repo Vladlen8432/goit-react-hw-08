@@ -14,5 +14,3 @@ createRoot(document.getElementById("root")).render(
     </Provider>
   </StrictMode>
 );
-
-// 01:20:00 lesson 1
