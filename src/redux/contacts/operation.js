@@ -18,6 +18,7 @@ export const addContact = createAsyncThunk(
   async (newContact, { rejectWithValue }) => {
     try {
       const response = await contactsApi.post("/contacts", newContact);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -36,15 +37,3 @@ export const deleteContact = createAsyncThunk(
     }
   }
 );
-
-// export const fetchContactThunk = createAsyncThunk(
-//   "fetchContact",
-//   async (_, thunkApi) => {
-//     try {
-//       const { data } = await contactsApi.get("/contacts");
-//       return data;
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
