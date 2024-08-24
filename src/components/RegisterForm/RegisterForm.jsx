@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from "formik";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { registerThunk } from "../../redux/auth/operation";
 
@@ -34,10 +34,6 @@ const RegisterForm = () => {
           <Field name="email" placeholder="Enter your email" />
           <Field name="password" placeholder="Enter your password" />
           <button type="submit">Register</button>
-
-          <p>
-            You already have an account? <Link to="/login">Sign in</Link>
-          </p>
         </Form>
       </Formik>
     </div>

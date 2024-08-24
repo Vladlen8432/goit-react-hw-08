@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { loginThunk } from "../../redux/auth/operation";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 
@@ -31,10 +31,6 @@ const LoginForm = () => {
           <Field name="email" placeholder="Enter your email" />
           <Field name="password" placeholder="Enter your password" />
           <button type="submit">Login</button>
-
-          <p>
-            You do not have account? <Link to="login">Sign up</Link>
-          </p>
         </Form>
       </Formik>
     </div>
