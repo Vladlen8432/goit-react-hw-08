@@ -1,24 +1,17 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+
 import { addContact } from "../../redux/contacts/operation";
 
-const ContactsForm = () => {
+const ContactsForm = ({ onAddContact }) => {
   const dispatch = useDispatch();
   const contacts = useSelector((state) => state.contacts?.items ?? []);
 
-  const [formData, setFormData] = useState({ name: "", number: "" });
+  const initialValues = { name: "", number: "" };
 
-  const handleChange = ({ target: { name, value } }) => {
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const resetForm = () => {
-    setFormData({ name: "", number: "" });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const { name, number } = formData;
+  const handleSubmit = (values, { resetForm }) => {
+    const { name, number } = values;
 
     if (name.trim() === "" || number.trim() === "") return;
 
@@ -31,35 +24,49 @@ const ContactsForm = () => {
       return;
     }
 
-    dispatch(addContact({ name, number }));
-    resetForm();
+    dispatch(addContact({ name, number })).then(() => {
+      resetForm();
+      if (onAddContact) {
+        onAddContact();
+      }
+    });
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          required
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Enter name"
-        />
-        <br />
-        <input
-          type="tel"
-          name="number"
-          required
-          value={formData.number}
-          onChange={handleChange}
-          placeholder="Enter phone number"
-        />
-        <br />
-        <button type="submit">Add contact</button>
-      </form>
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        {() => (
+          <Form>
+            <div>
+              <Field
+                type="text"
+                name="name"
+                required
+                placeholder="Enter name"
+              />
+              <ErrorMessage name="name" component="div" />
+            </div>
+            <br />
+            <div>
+              <Field
+                type="tel"
+                name="number"
+                required
+                placeholder="Enter phone number"
+              />
+              <ErrorMessage name="number" component="div" />
+            </div>
+            <br />
+            <button type="submit">Add contact</button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
+};
+
+ContactsForm.propTypes = {
+  onAddContact: PropTypes.func,
 };
 
 export default ContactsForm;

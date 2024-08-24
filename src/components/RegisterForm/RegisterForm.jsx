@@ -1,10 +1,12 @@
 import { Formik, Form, Field } from "formik";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import { registerThunk } from "../../redux/auth/operation";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const initialValues = {
     name: "",
@@ -13,7 +15,14 @@ const RegisterForm = () => {
   };
 
   const handleSubmit = (values, options) => {
-    dispatch(registerThunk(values));
+    dispatch(registerThunk(values))
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Registration failed: ", error);
+      });
+
     options.resetForm();
   };
 
@@ -27,7 +36,7 @@ const RegisterForm = () => {
           <button type="submit">Register</button>
 
           <p>
-            You already have account? <Link to="login">Sign in</Link>
+            You already have an account? <Link to="/login">Sign in</Link>
           </p>
         </Form>
       </Formik>
