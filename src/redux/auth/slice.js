@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk, logoutThunk, registerThunk } from "./operation";
+import { loginThunk, logoutThunk, registerThunk } from "./operations";
 
 const initialState = {
   user: {
@@ -33,21 +33,3 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-// export default authSlice.reducer;
-
-// const initialState = {
-//   user: {
-//     name: "",
-//     email: "",
-//   },
-//   token: null,
-//   isLoggedIn: false,
-//   isRefreshing: false,
-// };
-
-// const slice = createSlice({
-//   name: "auth",
-//   initialState,
-// });
-
-// export const authReducer = slice.reducer;

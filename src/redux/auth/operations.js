@@ -35,15 +35,3 @@ export const logoutThunk = createAsyncThunk("logout", async (_, thunkApi) => {
     return thunkApi.rejectWithValue(error.message);
   }
 });
-
-// export const getMeThunk = createAsyncThunk(
-//   "auth/getMe",
-//   async (_, thunkApi) => {
-//     try {
-//       const { data } = await contactsApi.get("users/current");
-//       return data;
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );

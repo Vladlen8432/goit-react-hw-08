@@ -2,7 +2,7 @@ import { Formik, Form, Field } from "formik";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { registerThunk } from "../../redux/auth/operation";
+import { registerThunk } from "../../redux/auth/operations";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();

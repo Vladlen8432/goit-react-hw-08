@@ -1,7 +1,7 @@
 import { Formik, Form, Field } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { loginThunk } from "../../redux/auth/operation";
+import { loginThunk } from "../../redux/auth/operations";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 
 const LoginForm = () => {

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
-import { addContact } from "../../redux/contacts/operation";
+import { addContact } from "../../redux/contacts/operations";
 
 const ContactsForm = ({ onAddContact }) => {
   const dispatch = useDispatch();
