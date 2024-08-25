@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
-import { logoutThunk } from "../../redux/auth/operations";
+import { logOutThunk } from "../../redux/auth/operations";
 
 const Navigation = () => {
   const user = useSelector(selectUser);
@@ -33,7 +33,7 @@ const Navigation = () => {
           )}
           {isLoggedIn && (
             <li>
-              <button onClick={() => dispatch(logoutThunk())}>Logout</button>
+              <button onClick={() => dispatch(logOutThunk())}>Logout</button>
             </li>
           )}
         </ul>

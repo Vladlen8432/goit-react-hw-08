@@ -27,7 +27,7 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
-export const logoutThunk = createAsyncThunk("logout", async (_, thunkApi) => {
+export const logOutThunk = createAsyncThunk("logout", async (_, thunkApi) => {
   try {
     await contactsApi.post("users/logout");
     clearToken();
@@ -35,3 +35,16 @@ export const logoutThunk = createAsyncThunk("logout", async (_, thunkApi) => {
     return thunkApi.rejectWithValue(error.message);
   }
 });
+
+export const refreshUserThunk = createAsyncThunk(
+  "refreshUser",
+  async (_, thunkApi) => {
+    try {
+      const { data } = await contactsApi.get("users/current");
+      setToken(data.token);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
