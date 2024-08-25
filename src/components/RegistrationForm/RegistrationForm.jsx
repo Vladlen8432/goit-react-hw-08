@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { registerThunk } from "../../redux/auth/operations";
 
-const RegisterForm = () => {
+const RegistrationForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -40,4 +40,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default RegistrationForm;
